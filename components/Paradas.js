@@ -17,7 +17,7 @@ export default class Paradas extends Component {
     
     this.state = {
       language: null,
-      paradas: null,
+      parada: null,
       text: null,
       direction: 'Tornada'
     }
@@ -28,11 +28,11 @@ export default class Paradas extends Component {
     const { direction } = this.state;
     fetch(`https://api.tmb.cat/v1/transit/linies/bus/${this.props.id}/trajectes/parades?app_id=${config.appId}&app_key=${config.apiKey}&cql_filter=(TIPUS_PAQUET+IN+(1)+AND+ID_SENTIT+IN+(${direction == 'Anada' ? 1 : 2}))&sortBy=ORDRE`)
         .then(data => data.json())
-        .then((paradas) => {
+        .then((parada) => {
             console.log(paradas.features[0])
             this.setState({
-              paradas: paradas.features,
-              text: paradas.features[0].properties.ORIGEN_TRAJECTE + " / " + paradas.features[0].properties.DESTI_TRAJECTE
+              paradas: parada.features,
+              text: parada.features[0].properties.ORIGEN_TRAJECTE + " / " + parada.features[0].properties.DESTI_TRAJECTE
             })
         })
   }
@@ -67,15 +67,16 @@ export default class Paradas extends Component {
           </TouchableHighlight>
         </View>
         <View style={styles.content}>
-          {paradas && (
+          {parada && (
           <View style={{flex: 1}}>
             <Text style={{textAlign: 'center', color: '#fff', fontSize: 25}}>{this.state.text}</Text>
             <Picker
-            selectedValue={this.state.language}
-            style={{height: 50, width: Dimensions.get('window').width - 30}}
-            onValueChange={(itemValue, itemIndex) =>
-              this.setState({language: itemValue})
-            }>
+                selectedValue={this.state.language}
+                style={{height: 50, width: Dimensions.get('window').width - 30}}
+                onValueChange={(itemValue, itemIndex) =>
+                    this.setState({language: itemValue})
+                }
+            >
               {this.state.paradas.map((item, k) => {return <Picker.Item size={20} color="#fff" value={`${item.properties.CODI_LINIA} - ${item.properties.CODI_PARADA}`} label={item.properties.NOM_PARADA} key={k}  /> })}
             </Picker>
           </View>
