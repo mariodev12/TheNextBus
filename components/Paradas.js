@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Dimensions, Platform, StyleSheet, Text, View, Picker, TouchableHighlight} from 'react-native';
-
+import { Navigation } from 'react-native-navigation';
 import { config } from '../helpers/config';
 
 export default class Paradas extends Component {
@@ -28,11 +28,11 @@ export default class Paradas extends Component {
     const { direction } = this.state;
     fetch(`https://api.tmb.cat/v1/transit/linies/bus/${this.props.id}/trajectes/parades?app_id=${config.appId}&app_key=${config.apiKey}&cql_filter=(TIPUS_PAQUET+IN+(1)+AND+ID_SENTIT+IN+(${direction == 'Anada' ? 1 : 2}))&sortBy=ORDRE`)
         .then(data => data.json())
-        .then((parada) => {
+        .then((paradas) => {
             console.log(paradas.features[0])
             this.setState({
-              paradas: parada.features,
-              text: parada.features[0].properties.ORIGEN_TRAJECTE + " / " + parada.features[0].properties.DESTI_TRAJECTE
+              paradas: paradas.features,
+              text: paradas.features[0].properties.ORIGEN_TRAJECTE + " / " + paradas.features[0].properties.DESTI_TRAJECTE
             })
         })
   }
@@ -54,20 +54,29 @@ export default class Paradas extends Component {
   }
   
   render() {
-    const {paradas,text } = this.state;
+    const { paradas, text } = this.state;
     console.log(text)
     return (
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.title}>Escull la parada de Bus</Text>
-          <TouchableHighlight
-            onPress={() => alert(this.state.language)}
+         <TouchableHighlight
+            onPress={() => {
+              Navigation.push(this.props.componentId, {
+                component: {
+                  name: 'Time',
+                  passProps: {
+                    id: this.state.language
+                  },
+                }
+              });
+            }}
           >
             <Text style={styles.confirm}>Confirmar</Text>
           </TouchableHighlight>
         </View>
         <View style={styles.content}>
-          {parada && (
+          {paradas && (
           <View style={{flex: 1}}>
             <Text style={{textAlign: 'center', color: '#fff', fontSize: 25}}>{this.state.text}</Text>
             <Picker
@@ -77,7 +86,7 @@ export default class Paradas extends Component {
                     this.setState({language: itemValue})
                 }
             >
-              {this.state.paradas.map((item, k) => {return <Picker.Item size={20} color="#fff" value={`${item.properties.CODI_LINIA} - ${item.properties.CODI_PARADA}`} label={item.properties.NOM_PARADA} key={k}  /> })}
+              {this.state.paradas.map((item, k) => {return <Picker.Item size={20} color="#fff" value={`${item.properties.CODI_LINIA} / ${item.properties.CODI_PARADA} / ${item.properties.NOM_PARADA}`} label={item.properties.NOM_PARADA} key={k}  /> })}
             </Picker>
           </View>
           )}
