@@ -32,7 +32,8 @@ export default class Paradas extends Component {
             console.log(paradas.features[0])
             this.setState({
               paradas: paradas.features,
-              text: paradas.features[0].properties.ORIGEN_TRAJECTE + " / " + paradas.features[0].properties.DESTI_TRAJECTE
+              text: paradas.features[0].properties.ORIGEN_TRAJECTE + " / " + paradas.features[0].properties.DESTI_TRAJECTE,
+              language:`${paradas.features[0].properties.CODI_LINIA} / ${paradas.features[0].properties.CODI_PARADA} / ${paradas.features[0].properties.NOM_PARADA}`
             })
         })
   }
@@ -47,7 +48,8 @@ export default class Paradas extends Component {
                 console.log(paradas.features[0])
                 this.setState({
                     paradas: paradas.features,
-                    text: paradas.features[0].properties.ORIGEN_TRAJECTE + " / " + paradas.features[0].properties.DESTI_TRAJECTE
+                    text: paradas.features[0].properties.ORIGEN_TRAJECTE + " / " + paradas.features[0].properties.DESTI_TRAJECTE,
+                    language:`${paradas.features[0].properties.CODI_LINIA} / ${paradas.features[0].properties.CODI_PARADA} / ${paradas.features[0].properties.NOM_PARADA}`
                 })
             })    
     }

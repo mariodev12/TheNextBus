@@ -37,7 +37,8 @@ export default class App extends Component {
         .then((bus) => {
           console.log(bus)
             this.setState({
-              linea: bus.features
+              linea: bus.features,
+              language: bus.features[0].properties.CODI_LINIA
             })
         })
   }
