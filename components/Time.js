@@ -3,6 +3,8 @@ import {Dimensions, Platform, StyleSheet, Text, View, Picker, TouchableHighlight
 import { Navigation } from 'react-native-navigation';
 import { config } from '../helpers/config';
 
+import Icon from 'react-native-vector-icons/FontAwesome5';
+
 class Time extends Component {
     static options(passProps) {
         return {
@@ -66,6 +68,15 @@ class Time extends Component {
                     >
                         <Text style={styles.parada}>{parada}</Text>
                         <Text style={styles.time}>{timeLeft[0]["text-ca"]}</Text>
+                        <TouchableHighlight
+                            onPress={() => {
+                                Navigation.pop(this.props.componentId);
+                            }}
+                        >
+                            <Text>
+                                <Icon name="arrow-alt-circle-left" size={30} color="#fff" />
+                            </Text>
+                        </TouchableHighlight>
                     </ScrollView>
                 ) : <ScrollView
                         refreshControl={
@@ -78,6 +89,15 @@ class Time extends Component {
                         contentContainerStyle={styles.scrollView}
                     >
                         <Text style={styles.senseInfo}>Sense informació</Text>
+                        <TouchableHighlight
+                            onPress={() => {
+                                Navigation.pop(this.props.componentId);
+                            }}
+                        >
+                            <Text>
+                                <Icon name="arrow-alt-circle-left" size={30} color="#fff" />
+                            </Text>
+                        </TouchableHighlight>
                     </ScrollView>}
             </View>
         );
@@ -86,18 +106,15 @@ class Time extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        paddingTop: 40,
-        paddingRight: 15,
-        paddingLeft: 15,
         flex: 1,
         backgroundColor: '#1f2125',
-        justifyContent: 'center',
-        alignItems: 'center'
     },
     scrollView: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        paddingLeft: 10,
+        paddingRight: 10
     },  
     time: {
         fontSize: 80,

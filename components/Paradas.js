@@ -3,6 +3,8 @@ import {Dimensions, Platform, StyleSheet, Text, View, Picker, TouchableHighlight
 import { Navigation } from 'react-native-navigation';
 import { config } from '../helpers/config';
 
+import Icon from 'react-native-vector-icons/FontAwesome5';
+
 export default class Paradas extends Component {
   static options(passProps) {
     return {
@@ -101,7 +103,19 @@ export default class Paradas extends Component {
                 })
             }
           >
-            <Text style={styles.directionButton}>{this.state.direction}</Text>
+            <Text style={styles.directionButton}>
+              <Icon name="sync" size={30} color="#fff" />
+              {this.state.direction}
+            </Text>
+          </TouchableHighlight>
+          <TouchableHighlight
+              onPress={() => {
+                  Navigation.pop(this.props.componentId);
+              }}
+          >
+              <Text>
+                <Icon name="arrow-alt-circle-left" size={30} color="#fff" />
+              </Text>
           </TouchableHighlight>
         </View>
       </View>
