@@ -11,6 +11,8 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, Picker, TouchableHighlight} from 'react-native';
 import { Navigation } from 'react-native-navigation';
 
+import SplashScreen from 'react-native-splash-screen'
+
 import { config } from './helpers/config';
 
 export default class App extends Component {
