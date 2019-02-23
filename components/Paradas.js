@@ -103,10 +103,14 @@ export default class Paradas extends Component {
                 })
             }
           >
-            <Text style={styles.directionButton}>
-              <Icon name="sync" size={30} color="#fff" />
-              {this.state.direction}
-            </Text>
+            <View style={styles.directionButtonContainer}>
+              <View style={styles.directionButtonIcon}>
+                <Icon name="sync" size={30} color="#fff" />
+              </View>
+              <View style={styles.directionButtonName}>
+                <Text style={styles.directionButton}>{this.state.direction}</Text>
+              </View>
+            </View>
           </TouchableHighlight>
           <TouchableHighlight
               onPress={() => {
@@ -114,7 +118,7 @@ export default class Paradas extends Component {
               }}
           >
               <Text>
-                <Icon name="arrow-alt-circle-left" size={30} color="#fff" />
+                <Icon name="arrow-alt-circle-left" size={80} color="#fff" />
               </Text>
           </TouchableHighlight>
         </View>
@@ -152,8 +156,15 @@ const styles = StyleSheet.create({
   },
   buttonChange: {
       flex: .5,
-      justifyContent: 'center',
-      alignItems: 'center'
+      justifyContent: 'space-around',
+      alignItems: 'center',
+  },
+  directionButtonContainer: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  directionButtonName: {
+    marginLeft: 10
   },
   directionButton: {
       fontSize: 30,

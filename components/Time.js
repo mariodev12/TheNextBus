@@ -95,7 +95,7 @@ class Time extends Component {
                             }}
                         >
                             <Text>
-                                <Icon name="arrow-alt-circle-left" size={30} color="#fff" />
+                                <Icon name="arrow-alt-circle-left" size={80} color="#fff" />
                             </Text>
                         </TouchableHighlight>
                     </ScrollView>}
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     },
     scrollView: {
         flex: 1,
-        justifyContent: 'center',
+        justifyContent: 'space-around',
         alignItems: 'center',
         paddingLeft: 10,
         paddingRight: 10
