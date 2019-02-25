@@ -5,6 +5,8 @@ import { config } from '../helpers/config';
 
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
+import Spinner from 'react-native-loading-spinner-overlay';
+
 class Time extends Component {
     static options(passProps) {
         return {
@@ -18,7 +20,8 @@ class Time extends Component {
         super(props);
         this.state = {
             timeLeft: [],
-            refreshing: false
+            refreshing: false,
+            spinner: false,
         }
     }
     
@@ -32,11 +35,15 @@ class Time extends Component {
                     timeLeft: bus.data.ibus
                 })
             })
+        setInterval(() => {
+            this.setState({
+                spinner: !this.state.spinner
+            });
+        }, 3000);
     }
 
     onRefresh = () => {
         this.setState({ refreshing: true });
-        // In actual case set refreshing to false when whatever is being refreshed is done!
         const idLinia = this.props.id.split(' / ')[0];
         const idParada = this.props.id.split(' / ')[1]    
         fetch(`https://api.tmb.cat/v1/ibus/lines/${idLinia}/stops/${idParada}?app_id=${config.appId}&app_key=${config.apiKey}`)
@@ -88,7 +95,11 @@ class Time extends Component {
                         }
                         contentContainerStyle={styles.scrollView}
                     >
-                        <Text style={styles.senseInfo}>Sense informació</Text>
+                        <Spinner
+                            visible={this.state.spinner}
+                            textContent={'Loading...'}
+                            textStyle={styles.spinnerTextStyle}
+                        />
                         <TouchableHighlight
                             onPress={() => {
                                 Navigation.pop(this.props.componentId);
@@ -128,7 +139,10 @@ const styles = StyleSheet.create({
         fontSize: 50,
         color: 'white',
         textAlign: 'center'
-    }
+    },
+    spinnerTextStyle: {
+        color: '#FFF'
+    },
 })
 
 export default Time;
