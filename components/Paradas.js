@@ -118,7 +118,7 @@ export default class Paradas extends Component {
               }}
           >
               <Text>
-                <Icon name="arrow-alt-circle-left" size={80} color="#fff" />
+                <Icon name="arrow-alt-circle-left" size={50} color="#fff" />
               </Text>
           </TouchableHighlight>
         </View>
