@@ -11,6 +11,8 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, Picker, TouchableHighlight} from 'react-native';
 import { Navigation } from 'react-native-navigation';
 
+import Geolocation from './components/Geolocation';
+
 import { config } from './helpers/config';
 
 export default class App extends Component {
@@ -77,6 +79,7 @@ export default class App extends Component {
             </Picker>
           </View>
           )}
+          <Geolocation />
         </View>
       </View>
     );

@@ -124,7 +124,7 @@ export default class Paradas extends Component {
         </View>
       </View>
     );
-}
+  }
 }
 
 const styles = StyleSheet.create({
