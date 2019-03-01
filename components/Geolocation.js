@@ -1,6 +1,7 @@
 import { 
     View,
-    Text
+    Text,
+    StyleSheet
 } from 'react-native'
 import React, { Component } from 'react';
 
@@ -37,7 +38,7 @@ class Geolocation extends Component {
     
     render() {
         return (
-            <View>
+            <View style={styles.container}>
                 <Text>
                     Latitude: {this.state.coords.latitude}
                 </Text>
@@ -49,5 +50,11 @@ class Geolocation extends Component {
         );
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    }
+})
 
 export default Geolocation;
