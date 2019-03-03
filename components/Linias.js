@@ -9,11 +9,10 @@
 
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, Picker, TouchableHighlight} from 'react-native';
+
+import { config } from '../helpers/config';
+
 import { Navigation } from 'react-native-navigation';
-
-import Geolocation from './components/Geolocation';
-
-import { config } from './helpers/config';
 
 export default class App extends Component {
   static options(passProps) {
@@ -34,18 +33,25 @@ export default class App extends Component {
   }
 
   componentDidMount() {
+    this._isMounted = true;
     fetch(`https://api.tmb.cat/v1/transit/linies/bus/?app_id=${config.appId}&app_key=${config.apiKey}&cql_filter=(CODI_FAMILIA+IN+(1,3,5,6,7))&propertyName=CODI_LINIA,ID_LINIA,NOM_LINIA,DESC_LINIA,ORIGEN_LINIA,DESTI_LINIA,NOM_TIPUS_TRANSPORT,ORDRE_FAMILIA,COLOR_LINIA,COLOR_TEXT_LINIA,ID_OPERADOR`)
         .then(data => data.json())
         .then((bus) => {
-          console.log(bus)
-            this.setState({
-              linea: bus.features,
-              language: bus.features[0].properties.CODI_LINIA
-            })
+            if(this._isMounted) {
+              this.setState({
+                linea: bus.features,
+                language: bus.features[0].properties.CODI_LINIA
+              })
+            }
         })
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
   
   render() {
+    console.log(this.props)
     const { linea } = this.state;
     return (
       <View style={styles.container}>
@@ -53,6 +59,7 @@ export default class App extends Component {
           <Text style={styles.title}>Escull la linia de Bus</Text>
           <TouchableHighlight
             onPress={() => {
+              console.log('pressed');
               Navigation.push(this.props.componentId, {
                 component: {
                   name: 'Paradas',
@@ -61,6 +68,7 @@ export default class App extends Component {
                   },
                 }
               });
+              
             }}
           >
             <Text style={styles.confirm}>Confirmar</Text>
@@ -79,7 +87,6 @@ export default class App extends Component {
             </Picker>
           </View>
           )}
-          <Geolocation />
         </View>
       </View>
     );

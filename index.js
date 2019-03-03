@@ -4,7 +4,6 @@
  */
 
 import {AppRegistry} from 'react-native';
-import Linias from './Linias';
 import {name as appName} from './app.json';
 import { Navigation } from 'react-native-navigation';
 import registerScreens from './Routes'

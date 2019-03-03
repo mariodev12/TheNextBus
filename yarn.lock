@@ -3942,6 +3942,10 @@ react-native-loading-spinner-overlay@^1.0.1:
   dependencies:
     prop-types "^15.6.2"
 
+react-native-mask-loader@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-mask-loader/-/react-native-mask-loader-0.0.3.tgz#4081db3a17b574c7b9057c89b39d23fbb2105a6e"
+
 react-native-modal-selector@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/react-native-modal-selector/-/react-native-modal-selector-1.0.2.tgz#d6ec94ea9d280162be6c439fea72455479bc5c73"
