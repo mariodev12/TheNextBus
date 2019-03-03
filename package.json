@@ -11,11 +11,13 @@
     "react-native": "^0.58.5",
     "react-native-geolocation-service": "^2.0.0",
     "react-native-loading-spinner-overlay": "^1.0.1",
+    "react-native-maps": "^0.23.0",
     "react-native-mask-loader": "^0.0.3",
     "react-native-modal-selector": "^1.0.2",
     "react-native-navigation": "^2.12.0",
     "react-native-splash-screen": "^3.2.0",
-    "react-native-vector-icons": "^6.3.0"
+    "react-native-vector-icons": "^6.3.0",
+    "transform-coordinates": "^0.1.0"
   },
   "devDependencies": {
     "babel-core": "^7.0.0-bridge.0",

@@ -4,6 +4,7 @@ import { Navigation } from 'react-native-navigation'
 import Linias from './components/Linias'
 import Paradas from './components/Paradas'
 import Time from './components/Time'
+import Geolocation from './components/Geolocation'
 import StartPoint from './components/startApplication'
 
 const registerScreens = () => {
@@ -11,6 +12,7 @@ const registerScreens = () => {
   Navigation.registerComponent('Linias', () => Linias)
   Navigation.registerComponent('Paradas', () => Paradas)
   Navigation.registerComponent('Time', () => Time)
+  Navigation.registerComponent('Geolocation', () => Geolocation)
 }
 
 export default registerScreens

@@ -88,6 +88,35 @@ export default class App extends Component {
           </View>
           )}
         </View>
+        <View style={styles.searchNearbyBus}>
+          <TouchableHighlight
+            onPress={() => {
+              console.log('pressed');
+              Navigation.showModal({
+                stack: {
+                  children: [{
+                    component: {
+                      name: 'Geolocation',
+                      passProps: {
+                        text: 'stack with one child'
+                      },
+                      options: {
+                        topBar: {
+                          title: {
+                            text: 'Parades properes'
+                          }
+                        }
+                      }
+                    }
+                  }]
+                }
+              });
+              
+            }}
+          >
+            <Text style={styles.nearbyText}>Trobar parades</Text>
+          </TouchableHighlight>
+        </View>
       </View>
     );
   }
@@ -118,12 +147,20 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    flex: .3,
   },
   welcome: {
     fontSize: 20,
     textAlign: 'center',
     margin: 10,
+  },
+  searchNearbyBus: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  nearbyText: {
+    fontSize: 25,
+    color: 'white'
   },
   instructions: {
     textAlign: 'center',
