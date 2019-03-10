@@ -68,9 +68,13 @@ class Geolocation extends Component {
         console.log(this.state.nearby)
         return (
             <View style={styles.container}>
-                {this.state.nearby.length > 0 ? this.renderParadas(this.state.nearby) : null}
-                <TouchableHighlight onPress={() => Navigation.dismissModal(this.props.componentId)}>
-                    <Text>Dismiss</Text>
+                <View>
+                    {this.state.nearby.length > 0 ? this.renderParadas(this.state.nearby) : null}
+                </View>
+                <TouchableHighlight 
+                    style={styles.buttonDismiss}
+                    onPress={() => Navigation.dismissModal(this.props.componentId)}>
+                    <Text style={styles.buttonTextDismiss}>Dismiss</Text>
                 </TouchableHighlight>
             </View>
         );
@@ -80,6 +84,20 @@ class Geolocation extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        justifyContent: 'space-between',
+    },
+    buttonDismiss: {
+        padding: 20,
+        backgroundColor: '#5564B9',
+        marginLeft: 5,
+        marginRight: 5,
+        marginBottom: 20,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    buttonTextDismiss: {
+        fontSize: 20,
+        color: 'white'
     }
 })
 
