@@ -56,9 +56,9 @@ class Geolocation extends Component {
     renderParadas(data) {
         return data.map((el, k) => {
             return (
-                <View key={k}>
-                    <Text>{el.properties.NOM} ({el.properties.CODI})</Text>
-                    <Text>{Math.round(el.properties.DISTANCE_IN_METERS)} metres</Text>
+                <View style={styles.parades}key={k}>
+                    <Text style={styles.paradesName}>{el.properties.NOM} ({el.properties.CODI})</Text>
+                    <Text style={styles.metres}>{Math.round(el.properties.DISTANCE_IN_METERS)} metres</Text>
                 </View>
             )
         })
@@ -85,6 +85,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'space-between',
+        marginTop: 20
     },
     buttonDismiss: {
         padding: 20,
@@ -98,6 +99,16 @@ const styles = StyleSheet.create({
     buttonTextDismiss: {
         fontSize: 20,
         color: 'white'
+    },
+    parades: {
+        marginBottom: 10,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    paradesName: {
+        fontWeight: '500',
+        fontSize: 15,
+        marginBottom: 5
     }
 })
 
