@@ -90,6 +90,7 @@ export default class App extends Component {
         </View>
         <View style={styles.searchNearbyBus}>
           <TouchableHighlight
+            style={styles.nearbyText}
             onPress={() => {
               console.log('pressed');
               Navigation.showModal({
@@ -114,7 +115,7 @@ export default class App extends Component {
               
             }}
           >
-            <Text style={styles.nearbyText}>Trobar parades</Text>
+            <Text style={styles.buttonText}>Trobar parades</Text>
           </TouchableHighlight>
         </View>
       </View>
@@ -159,7 +160,16 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   nearbyText: {
-    fontSize: 25,
+    padding: 20,
+    backgroundColor: '#5564B9',
+    marginLeft: 5,
+    marginRight: 5,
+    marginBottom: 20,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  buttonText: {
+    fontSize: 20,
     color: 'white'
   },
   instructions: {
@@ -167,4 +177,5 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
+  
 });
