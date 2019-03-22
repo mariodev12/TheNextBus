@@ -38,6 +38,7 @@ export default class App extends Component {
         .then(data => data.json())
         .then((bus) => {
             if(this._isMounted) {
+              console.log(bus)
               this.setState({
                 linea: bus.features,
                 language: bus.features[0].properties.CODI_LINIA
@@ -49,9 +50,25 @@ export default class App extends Component {
   componentWillUnmount() {
     this._isMounted = false;
   }
+
+  renderIcons = () => {
+    return this.state.linea.map((item, k) => {
+      return (
+        <View key={k} style={{
+            backgroundColor: `#${item.properties.COLOR_LINIA}`,
+            width: 50,
+            height: 50,
+            marginBottom: 10,
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}>
+          <Text style={{color: `#${item.properties.COLOR_TEXT_LINIA}`}}>{item.properties.CODI_LINIA}</Text>
+        </View>
+      )
+    })
+  }
   
   render() {
-    console.log(this.props)
     const { linea } = this.state;
     return (
       <View style={styles.container}>
@@ -75,6 +92,11 @@ export default class App extends Component {
           </TouchableHighlight>
         </View>
         <View style={styles.content}>
+          {linea && (
+          <View style={{flexWrap: 'wrap'}}>
+            {this.renderIcons()}
+          </View>
+          )}
           {linea && (
           <View>
             <Picker
@@ -146,8 +168,6 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   welcome: {
     fontSize: 20,
