@@ -85,7 +85,9 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'space-between',
-        marginTop: 20
+        marginTop: 20,
+        marginLeft: 20,
+        marginRight: 20,
     },
     buttonDismiss: {
         padding: 20,
@@ -102,8 +104,9 @@ const styles = StyleSheet.create({
     },
     parades: {
         marginBottom: 10,
-        justifyContent: 'center',
-        alignItems: 'center'
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
+        paddingBottom: 10,
     },
     paradesName: {
         fontWeight: '500',
