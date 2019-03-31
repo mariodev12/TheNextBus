@@ -33,7 +33,24 @@ class Geolocation extends Component {
                         longitude: position.coords.longitude
                     }
                 });
-                this.getInformationFromCoords(position.coords.latitude, position.coords.longitude)
+                const data = this.getInformationFromCoords(position.coords.latitude, position.coords.longitude)
+
+                data.then((d) => {
+                    const lines = this.resolveBus(d);
+                    lines.then((l) => {
+                        const arr = d.features.map((element, k) => {
+                            return {
+                                codi: element.properties.CODI,
+                                name: element.properties.NOM,
+                                metres: element.properties.DISTANCE_IN_METERS,
+                                linias: l[k].features
+                            }
+                        })
+                        this.setState({
+                            nearby: arr
+                        })
+                    })
+                })
             },
             (error) => {
                 // See error code charts below.
@@ -43,22 +60,40 @@ class Geolocation extends Component {
         );
     }
 
-    getInformationFromCoords(lat, lon) {
-        fetch(`https://api.tmb.cat/v1/maps/wfs?REQUEST=GetFeature&SERVICE=WFS&TYPENAME=ELEMENTS_SUPERFICIE&VERSION=1.1.0&app_id=${config.appId}&app_key=${config.apiKey}&cql_filter=(+(CODI_TIPUS%3D1)+OR+(CODI_TIPUS%3D2)+)&outputFormat=json&sortBy=DISTANCE_IN_METERS&srsName=EPSG:3857&viewparams=P_LON:${lon};P_LAT:${lat};P_DIST:200`)
-            .then(data => data.json())
-            .then((bus) => {
-                this.setState({
-                    nearby: bus.features
-                })
-            })
+    resolveBus(parent) {
+        const promises = parent.features.map(async item => {
+            const response = await fetch(`https://api.tmb.cat/v1/transit/parades/${item.properties.CODI}/corresp?app_id=${config.appId}&app_key=${config.apiKey}&cql_filter=(ID_OPERADOR+IN+(1,3,4,5)+OR+(ID_OPERADOR+IN+(2)+AND+CODI_FAMILIA+IN+(1,3,5,6,7)))&sortBy=ID_OPERADOR,ORDRE_FAMILIA,CODI_LINIA&srsName=EPSG:3857`)
+            return response.json()
+        })
+        return Promise.all(promises)
     }
 
+    async getInformationFromCoords(lat, lon) {
+        const response = await fetch(`https://api.tmb.cat/v1/maps/wfs?REQUEST=GetFeature&SERVICE=WFS&TYPENAME=ELEMENTS_SUPERFICIE&VERSION=1.1.0&app_id=${config.appId}&app_key=${config.apiKey}&cql_filter=(+(CODI_TIPUS%3D1)+OR+(CODI_TIPUS%3D2)+)&outputFormat=json&sortBy=DISTANCE_IN_METERS&srsName=EPSG:3857&viewparams=P_LON:${lon};P_LAT:${lat};P_DIST:200`)
+        return response.json()
+    }
     renderParadas(data) {
         return data.map((el, k) => {
             return (
                 <View style={styles.parades}key={k}>
-                    <Text style={styles.paradesName}>{el.properties.NOM} ({el.properties.CODI})</Text>
-                    <Text style={styles.metres}>{Math.round(el.properties.DISTANCE_IN_METERS)} metres</Text>
+                    <Text style={styles.paradesName}>{el.name} ({el.codi})</Text>
+                    <Text style={styles.metres}>{Math.round(el.metres)} metres</Text>
+                    <View style={styles.containerLines}> 
+                    {
+                        el.linias.map((item, i) => {
+                            console.log(item.properties.COLOR_TEXT_LINIA)
+                            return (
+                                <View style={[styles.lineBus, {
+                                    backgroundColor: `#${item.properties.COLOR_LINIA}`
+                                }]} key={i}>
+                                    <Text style={{
+                                        color: `#${item.properties.COLOR_TEXT_LINIA}`
+                                    }}>{item.properties.NOM_LINIA}</Text>
+                                </View>
+                            )
+                        })
+                    }
+                    </View>
                 </View>
             )
         })
@@ -101,6 +136,17 @@ const styles = StyleSheet.create({
     buttonTextDismiss: {
         fontSize: 20,
         color: 'white'
+    },
+    containerLines: {
+        flexDirection: 'row'
+    },
+    lineBus: {
+        width: 35,
+        height: 35,
+        borderRadius: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 10
     },
     parades: {
         marginBottom: 10,

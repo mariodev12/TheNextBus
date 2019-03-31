@@ -91,25 +91,18 @@ export default class App extends Component {
             <Text style={styles.confirm}>Confirmar</Text>
           </TouchableHighlight>
         </View>
-        <View style={styles.content}>
-          {linea && (
-          <View style={{flexWrap: 'wrap'}}>
-            {this.renderIcons()}
-          </View>
-          )}
-          {linea && (
-          <View>
-            <Picker
-            selectedValue={this.state.language}
-            style={{height: 50, width: 100}}
-            onValueChange={(itemValue, itemIndex) =>
-              this.setState({language: itemValue})
-            }>
-              {this.state.linea.map((item, k) => {return <Picker.Item size={20} color="#fff" value={item.properties.CODI_LINIA} label={item.properties.NOM_LINIA} key={k}  /> })}
-            </Picker>
-          </View>
-          )}
+        {linea && (
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <Picker
+          selectedValue={this.state.language}
+          style={{height: 50, width: 100}}
+          onValueChange={(itemValue, itemIndex) =>
+            this.setState({language: itemValue})
+          }>
+            {this.state.linea.map((item, k) => {return <Picker.Item size={20} color="#fff" value={item.properties.CODI_LINIA} label={item.properties.NOM_LINIA} key={k}  /> })}
+          </Picker>
         </View>
+        )}
         <View style={styles.searchNearbyBus}>
           <TouchableHighlight
             style={styles.nearbyText}
@@ -165,9 +158,6 @@ const styles = StyleSheet.create({
   confirm: {
     color: 'white',
     fontSize: 12,
-  },
-  content: {
-    flex: 1,
   },
   welcome: {
     fontSize: 20,
