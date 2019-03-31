@@ -72,11 +72,20 @@ export default class App extends Component {
     const { linea } = this.state;
     return (
       <View style={styles.container}>
-        <View style={styles.header}>
+        {linea && (
+        <View style={
+          {
+            flex: 1, 
+            justifyContent: 'center', 
+            alignItems: 'center', 
+            backgroundColor: '#414C84',
+            borderBottomLeftRadius: 60,
+          }
+          }>
+           <View style={styles.header}>
           <Text style={styles.title}>Escull la linia de Bus</Text>
           <TouchableHighlight
             onPress={() => {
-              console.log('pressed');
               Navigation.push(this.props.componentId, {
                 component: {
                   name: 'Paradas',
@@ -91,8 +100,6 @@ export default class App extends Component {
             <Text style={styles.confirm}>Confirmar</Text>
           </TouchableHighlight>
         </View>
-        {linea && (
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
           <Picker
           selectedValue={this.state.language}
           style={{height: 50, width: 100}}
@@ -140,11 +147,7 @@ export default class App extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 40,
-    paddingRight: 15,
-    paddingLeft: 15,
     flex: 1,
-    backgroundColor: '#1f2125',
   },
   header: {
     flexDirection: 'row',
@@ -152,8 +155,9 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   title: {
-     color: '#2991d8',
-     fontSize: 20
+     color: '#fff',
+     fontWeight: 'bold',
+     fontSize: 30
   },
   confirm: {
     color: 'white',
@@ -162,10 +166,9 @@ const styles = StyleSheet.create({
   welcome: {
     fontSize: 20,
     textAlign: 'center',
-    margin: 10,
   },
   searchNearbyBus: {
-    flex: 1,
+    flex: 2,
     justifyContent: 'center',
     alignItems: 'center'
   },

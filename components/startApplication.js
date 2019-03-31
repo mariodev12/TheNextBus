@@ -53,13 +53,7 @@ export default class startApplication extends Component {
         console.log(this.props)
         return (
             <View key={this.state.rootKey} style={styles.root}>
-                <Loader
-                    isLoaded={this.state.appReady}
-                    imageSource={this._image}
-                    backgroundStyle={styles.loadingBackgroundStyle}
-                >
-                    <Linias {...this.props} />
-                </Loader>
+                <Linias {...this.props} />
             </View>
             );
         }
