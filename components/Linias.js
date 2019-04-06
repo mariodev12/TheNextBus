@@ -72,7 +72,6 @@ export default class App extends Component {
     const { linea } = this.state;
     return (
       <View style={styles.container}>
-        {linea && (
         <View style={
           {
             flex: 1, 
@@ -86,7 +85,6 @@ export default class App extends Component {
           <Text style={styles.title}>Escull la linia de Bus</Text>
         </View>
         </View>
-        )}
         <View style={styles.searchNearbyBus}>
         <TouchableHighlight
             style={styles.nearbyText}
