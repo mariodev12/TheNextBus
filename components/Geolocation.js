@@ -2,7 +2,8 @@ import {
     View,
     Text,
     StyleSheet,
-    TouchableHighlight
+    TouchableHighlight,
+    ScrollView
 } from 'react-native'
 import React, { Component } from 'react';
 
@@ -75,7 +76,28 @@ class Geolocation extends Component {
     renderParadas(data) {
         return data.map((el, k) => {
             return (
-                <View style={styles.parades}key={k}>
+                <TouchableHighlight onPress={() => {
+                    Navigation.showModal({
+                        stack: {
+                        children: [{
+                            component: {
+                                name: 'ParadaBus',
+                                passProps: {
+                                    id: el.codi
+                                },
+                                options: {
+                                    topBar: {
+                                        title: {
+                                            text: el.name
+                                        }
+                                    }
+                                }
+                            }
+                        }]
+                        }
+                    });
+                }} style={styles.parades}key={k}>
+                    <View>
                     <Text style={styles.paradesName}>{el.name} ({el.codi})</Text>
                     <Text style={styles.metres}>{Math.round(el.metres)} metres</Text>
                     <View style={styles.containerLines}> 
@@ -83,18 +105,19 @@ class Geolocation extends Component {
                         el.linias.map((item, i) => {
                             console.log(item.properties.COLOR_TEXT_LINIA)
                             return (
-                                <View style={[styles.lineBus, {
-                                    backgroundColor: `#${item.properties.COLOR_LINIA}`
-                                }]} key={i}>
-                                    <Text style={{
-                                        color: `#${item.properties.COLOR_TEXT_LINIA}`
-                                    }}>{item.properties.NOM_LINIA}</Text>
-                                </View>
+                                    <View style={[styles.lineBus, {
+                                        backgroundColor: `#${item.properties.COLOR_LINIA}`
+                                    }]} key={i}>
+                                        <Text style={{
+                                            color: `#${item.properties.COLOR_TEXT_LINIA}`
+                                        }}>{item.properties.NOM_LINIA}</Text>
+                                    </View>
                             )
                         })
                     }
                     </View>
-                </View>
+                    </View>
+                </TouchableHighlight>
             )
         })
     }
@@ -103,14 +126,9 @@ class Geolocation extends Component {
         console.log(this.state.nearby)
         return (
             <View style={styles.container}>
-                <View>
+                <ScrollView>
                     {this.state.nearby.length > 0 ? this.renderParadas(this.state.nearby) : null}
-                </View>
-                <TouchableHighlight 
-                    style={styles.buttonDismiss}
-                    onPress={() => Navigation.dismissModal(this.props.componentId)}>
-                    <Text style={styles.buttonTextDismiss}>Dismiss</Text>
-                </TouchableHighlight>
+                </ScrollView>
             </View>
         );
     }

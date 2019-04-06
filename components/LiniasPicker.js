@@ -14,7 +14,7 @@ import { config } from '../helpers/config';
 
 import { Navigation } from 'react-native-navigation';
 
-export default class App extends Component {
+export default class LiniasPicker extends Component {
   static options(passProps) {
     return {
       topBar: {
@@ -50,76 +50,43 @@ export default class App extends Component {
   componentWillUnmount() {
     this._isMounted = false;
   }
-
-  renderIcons = () => {
-    return this.state.linea.map((item, k) => {
-      return (
-        <View key={k} style={{
-            backgroundColor: `#${item.properties.COLOR_LINIA}`,
-            width: 50,
-            height: 50,
-            marginBottom: 10,
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}>
-          <Text style={{color: `#${item.properties.COLOR_TEXT_LINIA}`}}>{item.properties.CODI_LINIA}</Text>
-        </View>
-      )
-    })
-  }
   
   render() {
     const { linea } = this.state;
     return (
       <View style={styles.container}>
         {linea && (
-        <View style={
-          {
-            flex: 1, 
-            justifyContent: 'center', 
-            alignItems: 'center', 
-            backgroundColor: '#414C84',
-            borderBottomLeftRadius: 60,
-          }
+            <View style={styles.container}>
+            <TouchableHighlight
+        onPress={() => {
+            Navigation.push(this.props.componentId, {
+            component: {
+                name: 'Paradas',
+                passProps: {
+                id: this.state.language
+                },
+            }
+            });
+            
+        }}
+        >
+        <Text style={styles.confirm}>Confirmar</Text>
+        </TouchableHighlight>
+          <Picker
+          selectedValue={this.state.language}
+          style={{height: 50, width: 100}}
+          onValueChange={(itemValue, itemIndex) =>
+            this.setState({language: itemValue})
           }>
-           <View style={styles.header}>
-          <Text style={styles.title}>Escull la linia de Bus</Text>
-        </View>
-        </View>
+            {this.state.linea.map((item, k) => {return <Picker.Item size={20} color="#000" value={item.properties.CODI_LINIA} label={item.properties.NOM_LINIA} key={k}  /> })}
+          </Picker>
+          <TouchableHighlight 
+            style={styles.buttonDismiss}
+                onPress={() => Navigation.pop(this.props.componentId)}>
+                <Text style={styles.buttonTextDismiss}>Back</Text>
+          </TouchableHighlight>
+          </View>
         )}
-        <View style={styles.searchNearbyBus}>
-        <TouchableHighlight
-            style={styles.nearbyText}
-            onPress={() => {
-              Navigation.push(this.props.componentId, {
-                component: {
-                  name: 'LiniasPicker',
-                  passProps: {
-                    id: this.state.language
-                  },
-                }
-              });
-            }}
-          >
-            <Text style={styles.buttonText}>Buscar bus</Text>
-          </TouchableHighlight>
-
-          <TouchableHighlight
-            style={styles.nearbyText}
-            onPress={() => {
-              Navigation.push(this.props.componentId, {
-                component: {
-                  name: 'Geolocation',
-                  passProps: {
-                    id: this.state.language
-                  },
-                }
-              });
-            }}
-          >
-            <Text style={styles.buttonText}>Trobar parades</Text>
-          </TouchableHighlight>
-        </View>
       </View>
     );
   }
@@ -128,19 +95,33 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'space-around',
+    alignItems: 'center',
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center'
   },
+  buttonDismiss: {
+        padding: 20,
+        backgroundColor: '#5564B9',
+        marginLeft: 5,
+        marginRight: 5,
+        marginBottom: 20,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    buttonTextDismiss: {
+        color: 'white'
+    },
   title: {
      color: '#fff',
      fontWeight: 'bold',
      fontSize: 30
   },
   confirm: {
-    color: 'white',
+    color: 'black',
     fontSize: 12,
   },
   welcome: {
