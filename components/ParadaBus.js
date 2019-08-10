@@ -3,13 +3,17 @@ import {
     Text,
     StyleSheet,
     TouchableHighlight,
-    ScrollView
+    ScrollView,
+    Linking
 } from 'react-native'
 import React, { Component } from 'react';
 
 import { Navigation } from 'react-native-navigation';
 
 import { config } from '../helpers/config';
+const paradasJSON = require('../assets/locations/paradas.json')
+
+import InAppBrowser from 'react-native-inappbrowser-reborn'
 
 const _ = require('lodash');
 
@@ -44,14 +48,61 @@ class ParadaBus extends Component {
             )
         })
     }
+
+    openLink = async () => {
+        const { latitude, longitude } = this.getCoords()
+        try {
+            const url = `https://maps.google.com?saddr=Current+Location&daddr=${latitude},${longitude}`
+        if (await InAppBrowser.isAvailable()) {
+            const result = await InAppBrowser.open(url, {
+                // iOS Properties
+                dismissButtonStyle: 'cancel',
+                preferredBarTintColor: '#453AA4',
+                preferredControlTintColor: 'white',
+                readerMode: false,
+                animated: true,
+                modalPresentationStyle: 'overFullScreen',
+                modalTransitionStyle: 'partialCurl',
+                modalEnabled: true,
+                // Android Properties
+                showTitle: true,
+                toolbarColor: '#6200EE',
+                secondaryToolbarColor: 'black',
+                enableUrlBarHiding: true,
+                enableDefaultShare: true,
+                forceCloseOnRedirection: false,
+            })
+        }
+        else Linking.openURL(url)
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+
+    getCoords = () => {
+        const list = paradasJSON.features;
+        const coords = list[list.findIndex(x => x.properties.CODI_PARADA == this.props.id)];
+        const latitude = coords.geometry.coordinates[1];
+        const longitude = coords.geometry.coordinates[0];
+        return {
+            latitude,
+            longitude
+        }
+        
+    }
     
     render() {
-        console.log(this.state.nearby)
+        console.log(this.state.nearby, paradasJSON, this.getCoords())
         return (
             <View style={styles.container}>
                 <ScrollView>
                     {this.state.bus.length > 0 ? this.renderParadas(this.state.bus) : null}
                 </ScrollView>
+                <TouchableHighlight 
+                    style={styles.buttonDismiss}
+                    onPress={() => this.openLink()}>
+                    <Text style={styles.buttonTextDismiss}>Anar a la parada</Text>
+                </TouchableHighlight>
                 <TouchableHighlight 
                     style={styles.buttonDismiss}
                     onPress={() => Navigation.dismissModal(this.props.componentId)}>

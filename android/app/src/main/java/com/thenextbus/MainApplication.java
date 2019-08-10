@@ -3,6 +3,9 @@ package com.thenextbus;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
+import com.reactnativecommunity.slider.ReactSliderPackage;
+import com.proyecto26.inappbrowser.RNInAppBrowserPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.agontuk.RNFusedLocation.RNFusedLocationPackage;
 import com.airbnb.android.react.maps.MapsPackage;
@@ -27,6 +30,9 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new AsyncStoragePackage(),
+            new ReactSliderPackage(),
+            new RNInAppBrowserPackage(),
             new SplashScreenReactPackage(),
             new RNFusedLocationPackage(),
             new MapsPackage(),

@@ -134,6 +134,9 @@ android {
 }
 
 dependencies {
+    implementation project(':@react-native-community_async-storage')
+    implementation project(':@react-native-community_slider')
+    implementation project(':react-native-inappbrowser-reborn')
     implementation project(':react-native-splash-screen')
     implementation project(':react-native-geolocation-service')
     implementation project(':react-native-maps')

@@ -13,6 +13,7 @@ import {Platform, StyleSheet, Text, View, Picker, TouchableHighlight} from 'reac
 import { config } from '../helpers/config';
 
 import { Navigation } from 'react-native-navigation';
+import Slider from '@react-native-community/slider';
 
 export default class App extends Component {
   static options(passProps) {
@@ -28,7 +29,8 @@ export default class App extends Component {
     
     this.state = {
       language: null,
-      linea: null
+      linea: null,
+      km: 200
     }
   }
 
@@ -109,14 +111,32 @@ export default class App extends Component {
                 component: {
                   name: 'Geolocation',
                   passProps: {
-                    id: this.state.language
+                    id: this.state.language,
+                    km: this.state.km
                   },
+                  options: {
+                      topBar: {
+                          title: {
+                              text: `A ${this.state.km} metres`
+                          }
+                      }
+                  }
                 }
               });
             }}
           >
             <Text style={styles.buttonText}>Trobar parades</Text>
           </TouchableHighlight>
+          <Text>Distancia: {this.state.km} metres</Text>
+          <Slider
+            style={{width: 200, height: 40}}
+            minimumValue={200}
+            maximumValue={1000}
+            onValueChange={ (e) => this.setState({km: Math.round(e)})}
+            minimumTrackTintColor="black"
+            maximumTrackTintColor="black"
+            thumbTintColor="#5564B9"
+          />
         </View>
       </View>
     );
