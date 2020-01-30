@@ -10,7 +10,7 @@ import React, { Component } from 'react';
 
 import { Navigation } from 'react-native-navigation';
 
-import { config } from '../helpers/config';
+import { appId, appKey } from '../helpers/config';
 const paradasJSON = require('../assets/locations/paradas.json')
 
 import InAppBrowser from 'react-native-inappbrowser-reborn'
@@ -27,7 +27,7 @@ class ParadaBus extends Component {
     
     componentDidMount() {
         const { id } = this.props
-        fetch(`https://api.tmb.cat/v1/ibus/stops/${id}?app_id=${config.appId}&app_key=${config.apiKey}&numberOfPredictions=2`)
+        fetch(`https://api.tmb.cat/v1/ibus/stops/${id}?app_id=${appId}&app_key=${appKey}&numberOfPredictions=2`)
             .then(data => data.json())
             .then((bus) => {
                 const arr = bus.data.ibus

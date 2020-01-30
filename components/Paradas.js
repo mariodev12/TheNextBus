@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Dimensions, Platform, StyleSheet, Text, View, Picker, TouchableHighlight} from 'react-native';
 import { Navigation } from 'react-native-navigation';
-import { config } from '../helpers/config';
+import { appId, appKey } from '../helpers/config';
 
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
@@ -28,7 +28,7 @@ export default class Paradas extends Component {
 
   componentDidMount() {
     const { direction } = this.state;
-    fetch(`https://api.tmb.cat/v1/transit/linies/bus/${this.props.id}/trajectes/parades?app_id=${config.appId}&app_key=${config.apiKey}&cql_filter=(TIPUS_PAQUET+IN+(1)+AND+ID_SENTIT+IN+(${direction == 'Anada' ? 1 : 2}))&sortBy=ORDRE`)
+    fetch(`https://api.tmb.cat/v1/transit/linies/bus/${this.props.id}/trajectes/parades?app_id=${appId}&app_key=${appKey}&cql_filter=(TIPUS_PAQUET+IN+(1)+AND+ID_SENTIT+IN+(${direction == 'Anada' ? 1 : 2}))&sortBy=ORDRE`)
         .then(data => data.json())
         .then((paradas) => {
             console.log(paradas.features[0])
@@ -44,7 +44,7 @@ export default class Paradas extends Component {
     if (prevState.direction != this.state.direction) {
         console.log('componentDidUpdate')
         const { direction } = this.state;
-        fetch(`https://api.tmb.cat/v1/transit/linies/bus/${this.props.id}/trajectes/parades?app_id=${config.appId}&app_key=${config.apiKey}&cql_filter=(TIPUS_PAQUET+IN+(1)+AND+ID_SENTIT+IN+(${direction == 'Anada' ? 1 : 2}))&sortBy=ORDRE`)
+        fetch(`https://api.tmb.cat/v1/transit/linies/bus/${this.props.id}/trajectes/parades?app_id=${appId}&app_key=${appKey}&cql_filter=(TIPUS_PAQUET+IN+(1)+AND+ID_SENTIT+IN+(${direction == 'Anada' ? 1 : 2}))&sortBy=ORDRE`)
             .then(data => data.json())
             .then((paradas) => {
                 console.log(paradas.features[0])

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Dimensions, Platform, StyleSheet, Text, View, Picker, TouchableHighlight, ScrollView, RefreshControl} from 'react-native';
 import { Navigation } from 'react-native-navigation';
-import { config } from '../helpers/config';
+import { appId, appKey } from '../helpers/config';
 
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
@@ -25,7 +25,7 @@ class Time extends Component {
     componentDidMount() {  
         const idLinia = this.props.id.split(' / ')[0];
         const idParada = this.props.id.split(' / ')[1]    
-        fetch(`https://api.tmb.cat/v1/ibus/lines/${idLinia}/stops/${idParada}?app_id=${config.appId}&app_key=${config.apiKey}`)
+        fetch(`https://api.tmb.cat/v1/ibus/lines/${idLinia}/stops/${idParada}?app_id=${appId}&app_key=${appKey}`)
             .then(data => data.json())
             .then((bus) => {
                 this.setState({
@@ -39,7 +39,7 @@ class Time extends Component {
         // In actual case set refreshing to false when whatever is being refreshed is done!
         const idLinia = this.props.id.split(' / ')[0];
         const idParada = this.props.id.split(' / ')[1]    
-        fetch(`https://api.tmb.cat/v1/ibus/lines/${idLinia}/stops/${idParada}?app_id=${config.appId}&app_key=${config.apiKey}`)
+        fetch(`https://api.tmb.cat/v1/ibus/lines/${idLinia}/stops/${idParada}?app_id=${appId}&app_key=${appKey}`)
             .then(data => data.json())
             .then((bus) => {
                 this.setState({

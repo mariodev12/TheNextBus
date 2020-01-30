@@ -10,7 +10,7 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, Picker, TouchableHighlight} from 'react-native';
 
-import { config } from '../helpers/config';
+import { appId, appKey } from '../helpers/config';
 
 import { Navigation } from 'react-native-navigation';
 
@@ -34,7 +34,7 @@ export default class LiniasPicker extends Component {
 
   componentDidMount() {
     this._isMounted = true;
-    fetch(`https://api.tmb.cat/v1/transit/linies/bus/?app_id=${config.appId}&app_key=${config.apiKey}&cql_filter=(CODI_FAMILIA+IN+(1,3,5,6,7))&propertyName=CODI_LINIA,ID_LINIA,NOM_LINIA,DESC_LINIA,ORIGEN_LINIA,DESTI_LINIA,NOM_TIPUS_TRANSPORT,ORDRE_FAMILIA,COLOR_LINIA,COLOR_TEXT_LINIA,ID_OPERADOR`)
+    fetch(`https://api.tmb.cat/v1/transit/linies/bus/?app_id=${appId}&app_key=${appKey}&cql_filter=(CODI_FAMILIA+IN+(1,3,5,6,7))&propertyName=CODI_LINIA,ID_LINIA,NOM_LINIA,DESC_LINIA,ORIGEN_LINIA,DESTI_LINIA,NOM_TIPUS_TRANSPORT,ORDRE_FAMILIA,COLOR_LINIA,COLOR_TEXT_LINIA,ID_OPERADOR`)
         .then(data => data.json())
         .then((bus) => {
             if(this._isMounted) {

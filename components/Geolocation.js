@@ -10,7 +10,7 @@ import React, { Component } from 'react';
 import { Navigation } from 'react-native-navigation';
 import GeolocationAPI from 'react-native-geolocation-service';
 
-import { config } from '../helpers/config';
+import { appId, appKey } from '../helpers/config';
 
 class Geolocation extends Component {
     constructor(props) {
@@ -64,14 +64,14 @@ class Geolocation extends Component {
 
     resolveBus(parent) {
         const promises = parent.features.map(async item => {
-            const response = await fetch(`https://api.tmb.cat/v1/transit/parades/${item.properties.CODI}/corresp?app_id=${config.appId}&app_key=${config.apiKey}&cql_filter=(ID_OPERADOR+IN+(1,3,4,5)+OR+(ID_OPERADOR+IN+(2)+AND+CODI_FAMILIA+IN+(1,3,5,6,7)))&sortBy=ID_OPERADOR,ORDRE_FAMILIA,CODI_LINIA&srsName=EPSG:3857`)
+            const response = await fetch(`https://api.tmb.cat/v1/transit/parades/${item.properties.CODI}/corresp?app_id=${appId}&app_key=${appKey}&cql_filter=(ID_OPERADOR+IN+(1,3,4,5)+OR+(ID_OPERADOR+IN+(2)+AND+CODI_FAMILIA+IN+(1,3,5,6,7)))&sortBy=ID_OPERADOR,ORDRE_FAMILIA,CODI_LINIA&srsName=EPSG:3857`)
             return response.json()
         })
         return Promise.all(promises)
     }
 
     async getInformationFromCoords(lat, lon) {
-        const response = await fetch(`https://api.tmb.cat/v1/maps/wfs?REQUEST=GetFeature&SERVICE=WFS&TYPENAME=ELEMENTS_SUPERFICIE&VERSION=1.1.0&app_id=${config.appId}&app_key=${config.apiKey}&cql_filter=(+(CODI_TIPUS%3D1)+OR+(CODI_TIPUS%3D2)+)&outputFormat=json&sortBy=DISTANCE_IN_METERS&srsName=EPSG:3857&viewparams=P_LON:${lon};P_LAT:${lat};P_DIST:${this.props.km}`)
+        const response = await fetch(`https://api.tmb.cat/v1/maps/wfs?REQUEST=GetFeature&SERVICE=WFS&TYPENAME=ELEMENTS_SUPERFICIE&VERSION=1.1.0&app_id=${appId}&app_key=${appKey}&cql_filter=(+(CODI_TIPUS%3D1)+OR+(CODI_TIPUS%3D2)+)&outputFormat=json&sortBy=DISTANCE_IN_METERS&srsName=EPSG:3857&viewparams=P_LON:${lon};P_LAT:${lat};P_DIST:${this.props.km}`)
         return response.json()
     }
     renderParadas(data) {
