@@ -14,7 +14,6 @@ Navigation.events().registerAppLaunchedListener(async () => {
     Navigation.setRoot({
         root: {
         stack: {
-            id: 'TEST',
             children: [
             {
                 component: {
