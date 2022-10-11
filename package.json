@@ -13,7 +13,7 @@
     "@ui-kitten/components": "^4.3.2",
     "lodash": "^4.17.11",
     "react": "16.6.3",
-    "react-native": "^0.58.5",
+    "react-native": "^0.70.2",
     "react-native-geolocation-service": "^2.0.0",
     "react-native-inappbrowser-reborn": "^3.0.0",
     "react-native-loading-spinner-overlay": "^1.0.1",
